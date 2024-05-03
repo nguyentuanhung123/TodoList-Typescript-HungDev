@@ -38,12 +38,25 @@ const TodoList = () => {
         setTodos(handler);
     }
 
+    const deleteTodo = (id: string) => {
+        const handleDelete = (todosObj: Todo[]) => {
+            const findIndexTodo = todosObj.findIndex((todo) => todo.id === id)
+            if (findIndexTodo > -1) {
+                const result = [...todosObj]
+                result.splice(findIndexTodo, 1)
+                return result;
+            }
+            return todosObj
+        }
+        setTodos(handleDelete);
+    }
+
     return (
         <div className={styles.todoList}>
             <div className={styles.todoListContainer}>
                 <TaskInput addTodo={addTodo}/>
-                <TaskList todos={notdoneTodos} doneTaskList={false} handleDoneTodo = {handleDoneTodo}/>
-                <TaskList todos={doneTodos} doneTaskList={true} handleDoneTodo = {handleDoneTodo}/>
+                <TaskList todos={notdoneTodos} doneTaskList={false} handleDoneTodo = {handleDoneTodo} deleteTodo={deleteTodo}/>
+                <TaskList todos={doneTodos} doneTaskList={true} handleDoneTodo = {handleDoneTodo} deleteTodo={deleteTodo}/>
             </div>
         </div>
     )
