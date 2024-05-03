@@ -28,12 +28,22 @@ const TodoList = () => {
         setTodos(handleAdd)
     }
 
+    const handleDoneTodo = (id: string, done: boolean) => {
+        const handler = (todosObj: Todo[]) => {
+            return todosObj.map((todo) => {
+                if (todo.id === id) return { ...todo, done }
+                return todo
+            })
+        }
+        setTodos(handler);
+    }
+
     return (
         <div className={styles.todoList}>
             <div className={styles.todoListContainer}>
                 <TaskInput addTodo={addTodo}/>
-                <TaskList todos={notdoneTodos}/>
-                <TaskList todos={doneTodos}/>
+                <TaskList todos={notdoneTodos} doneTaskList={false} handleDoneTodo = {handleDoneTodo}/>
+                <TaskList todos={doneTodos} doneTaskList={true} handleDoneTodo = {handleDoneTodo}/>
             </div>
         </div>
     )
